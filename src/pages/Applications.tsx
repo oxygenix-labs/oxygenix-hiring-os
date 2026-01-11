@@ -18,7 +18,7 @@ const Applications: React.FC = () => {
       <main className="flex-1 overflow-hidden">
         <Header />
         <div className="p-6 overflow-y-auto h-[calc(100vh-64px)]">
-          <ApplicationsPipeline candidates={candidates} onMoveCandidate={handleMoveCandidate} onViewCandidate={(id) => console.log('View', id)} />
+          <ApplicationsPipeline candidates={candidates} onMoveCandidate={handleMoveCandidate} onViewCandidate={(id) => {}} />
         </div>
       </main>
     </div>
