@@ -93,7 +93,7 @@ export const Sidebar: React.FC = () => {
             Track your Finance to more Specific
           </p>
           <Button variant="gradient" size="sm" className="w-full">
-            Try it Free 7 Days
+            Try it Free 3 Days
           </Button>
         </div>
       </div>
