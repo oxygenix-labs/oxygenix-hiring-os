@@ -13,7 +13,6 @@ import { ArrowLeft } from 'lucide-react';
 type ViewMode = 'list' | 'create' | 'edit' | 'publish';
 
 const Jobs: React.FC = () => {
-  const navigate = useNavigate();
   const [viewMode, setViewMode] = useState<ViewMode>('list');
   const [jobs, setJobs] = useState<JobPost[]>(mockJobs);
   const [selectedJobId, setSelectedJobId] = useState<string | null>(null);
