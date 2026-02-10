@@ -2,112 +2,103 @@ import React from 'react';
 
 interface OxygenixLabsLogoProps {
     size?: 'small' | 'medium' | 'large';
-    variant?: 'light' | 'dark';
+    variant?: 'light' | 'dark'; // kept for prop compatibility, but mostly using theme now
     iconOnly?: boolean;
     product?: 'labs' | 'ui' | 'airsense' | 'planner' | 'hire';
+    className?: string;
 }
 
 export function OxygenixLabsLogo({
     size = 'medium',
     variant = 'dark',
     iconOnly = false,
-    product = 'labs'
+    product = 'labs',
+    className = ''
 }: OxygenixLabsLogoProps) {
+    // Dimensions mapping
     const dimensions = {
-        small: { icon: 28, fontSize: '16px' },
-        medium: { icon: 42, fontSize: '32px' },
-        large: { icon: 56, fontSize: '48px' }
+        small: { icon: 24, fontSize: 'text-base', spacing: 'gap-2' },
+        medium: { icon: 36, fontSize: 'text-2xl', spacing: 'gap-3' },
+        large: { icon: 48, fontSize: 'text-4xl', spacing: 'gap-4' }
     };
 
     const dim = dimensions[size];
-    const textColor = variant === 'light' ? '#ffffff' : '#1e293b';
-    const primaryGradient = variant === 'light'
-        ? ['#a78bfa', '#ec4899', '#f472b6']
-        : ['#8b5cf6', '#d946ef', '#ec4899'];
-
-    const productNames = {
-        labs: 'LABS',
-        ui: 'UI',
-        airsense: 'AIRSENSE',
-        planner: 'PLANNER',
-        hire: 'HIRE'
-    };
 
     return (
-        <div className="flex items-center gap-4">
-            {/* Icon - Abstract O2 Design */}
-            <svg
-                width={dim.icon}
-                height={dim.icon}
-                viewBox="0 0 56 56"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-            >
-                <defs>
-                    <linearGradient id={`gradient-${size}-${variant}`} x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stopColor={primaryGradient[0]} />
-                        <stop offset="50%" stopColor={primaryGradient[1]} />
-                        <stop offset="100%" stopColor={primaryGradient[2]} />
-                    </linearGradient>
-                </defs>
+        <div className={`flex items-center ${dim.spacing} group ${className}`}>
+            {/* Logo Icon with Glow */}
+            <div className="relative flex items-center justify-center">
+                {/* Outer Glow */}
+                <div className="absolute inset-0 bg-violet-600/30 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 scale-150" />
 
-                {/* Stylized "O" - Left circle with cutout */}
-                <circle
-                    cx="18"
-                    cy="28"
-                    r="14"
-                    fill={`url(#gradient-${size}-${variant})`}
-                    opacity="0.9"
-                />
-                <circle
-                    cx="18"
-                    cy="28"
-                    r="9"
-                    fill={variant === 'light' ? '#1e293b' : '#ffffff'}
-                    opacity={variant === 'light' ? '0.1' : '0.05'}
-                />
+                <svg
+                    width={dim.icon}
+                    height={dim.icon}
+                    viewBox="0 0 56 56"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="relative z-10 drop-shadow-lg"
+                >
+                    <defs>
+                        <linearGradient id="logo-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" className="text-violet-500" stopColor="currentColor" />
+                            <stop offset="100%" className="text-fuchsia-600" stopColor="currentColor" />
+                        </linearGradient>
+                        <linearGradient id="logo-gradient-hover" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" className="text-fuchsia-500" stopColor="currentColor" />
+                            <stop offset="100%" className="text-violet-600" stopColor="currentColor" />
+                        </linearGradient>
+                    </defs>
 
-                {/* Stylized "X" - Crossed lines */}
-                <path
-                    d="M28 16 L32 16 L38 28 L44 16 L48 16 L40 30 L48 44 L44 44 L38 32 L32 44 L28 44 L36 30 Z"
-                    fill={`url(#gradient-${size}-${variant})`}
-                    opacity="0.9"
-                />
+                    {/* Main Circle Ring */}
+                    <circle
+                        cx="28"
+                        cy="28"
+                        r="22"
+                        stroke="url(#logo-gradient)"
+                        strokeWidth="4"
+                        strokeLinecap="round"
+                        className="opacity-90 group-hover:opacity-0 transition-opacity"
+                    />
 
-                {/* Small accent circle (represents subscript 2) */}
-                <circle
-                    cx="50"
-                    cy="38"
-                    r="3.5"
-                    fill={primaryGradient[2]}
-                    opacity="0.8"
-                />
-            </svg>
+                    {/* Hover Ring (Spinning or Different Color) */}
+                    <circle
+                        cx="28"
+                        cy="28"
+                        r="22"
+                        stroke="url(#logo-gradient-hover)"
+                        strokeWidth="4"
+                        strokeLinecap="round"
+                        strokeDasharray="100 40"
+                        className="opacity-0 group-hover:opacity-100 transition-all duration-700 ease-out origin-center -rotate-90 group-hover:rotate-0"
+                    />
+
+                    {/* Central Element: O2 Symbol Abstract */}
+                    <path
+                        d="M20 28C20 23.5817 23.5817 20 28 20C32.4183 20 36 23.5817 36 28"
+                        stroke="url(#logo-gradient)"
+                        strokeWidth="4"
+                        strokeLinecap="round"
+                        className="transition-all duration-300 group-hover:translate-y-[-2px]"
+                    />
+                    <circle
+                        cx="28"
+                        cy="36"
+                        r="3"
+                        fill="currentColor"
+                        className="text-white dark:text-violet-200"
+                    />
+                </svg>
+            </div>
 
             {/* Text Logo */}
             {!iconOnly && (
-                <div className="flex items-center gap-1">
-                    <span
-                        style={{
-                            color: textColor,
-                            fontSize: dim.fontSize,
-                            fontWeight: 700,
-                            letterSpacing: '-0.03em'
-                        }}
-                    >
-                        OXYGENIX
+                <div className="flex flex-col leading-none select-none">
+                    <span className={`font-outfit font-bold tracking-tight text-foreground ${dim.fontSize}`}>
+                        Oxygenix
                     </span>
-                    <span
-                        style={{
-                            color: textColor,
-                            fontSize: `calc(${dim.fontSize} * 0.5)`,
-                            fontWeight: 600,
-                            opacity: 0.5,
-                            alignSelf: 'flex-start',
-                            marginTop: size === 'small' ? '2px' : size === 'medium' ? '4px' : '6px'
-                        }}
-                    >
-                        {productNames[product]}
+                    <span className="text-xs font-semibold tracking-widest text-violet-500 uppercase ml-0.5">
+                        {product}
                     </span>
                 </div>
             )}
