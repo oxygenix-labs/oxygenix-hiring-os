@@ -3,12 +3,12 @@ import { JobPost } from '@/types/ats';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
-import { 
-  Plus, 
-  Search, 
-  Filter, 
-  MoreVertical, 
-  Users, 
+import {
+  Plus,
+  Search,
+  Filter,
+  MoreVertical,
+  Users,
   MapPin,
   Calendar,
   Pencil,
@@ -22,7 +22,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { useNavigate } from 'react-router-dom';
+
 
 interface JobsListProps {
   jobs: JobPost[];

@@ -2,7 +2,7 @@ import mongoose, { Schema, Model, Document } from 'mongoose';
 import bcrypt from 'bcryptjs';
 
 export interface IUser extends Document {
-    _id: string;
+    _id: mongoose.Types.ObjectId;
     email: string;
     password: string;
     fullName: string;
@@ -100,7 +100,7 @@ userSchema.methods.comparePassword = async function (candidatePassword: string):
 };
 
 // Check if trial is expired before queries
-userSchema.pre(/^find/, function (next) {
+userSchema.pre(/^find/, function (this: any, next) {
     const now = new Date();
     this.where({ trialEndDate: { $gte: now } });
     next();

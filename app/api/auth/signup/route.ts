@@ -56,7 +56,7 @@ export async function POST(request: NextRequest) {
         });
 
         // Update organization with owner ID
-        organization.ownerId = user._id;
+        organization.ownerId = user._id as any;
         await organization.save();
 
         return NextResponse.json(

@@ -1,17 +1,19 @@
 import React from 'react';
-import { 
-  LayoutDashboard, 
-  Briefcase, 
-  Users, 
-  FileText, 
-  MessageSquare, 
-  CreditCard, 
+import {
+  LayoutDashboard,
+  Briefcase,
+  Users,
+  FileText,
+  MessageSquare,
+  CreditCard,
   Building2,
   Zap,
   ChevronRight
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 interface NavItem {
   icon: React.ElementType;
@@ -35,6 +37,7 @@ const manageItems: NavItem[] = [
 ];
 
 export const Sidebar: React.FC = () => {
+  const pathname = usePathname();
   return (
     <aside className="w-64 h-screen bg-card border-r border-border flex flex-col">
       {/* Logo */}
@@ -66,9 +69,10 @@ export const Sidebar: React.FC = () => {
       <nav className="flex-1 p-4 space-y-6 overflow-y-auto">
         <div className="space-y-1">
           {navItems.map((item) => (
-            <NavLink key={item.label} item={item} />
+            <NavLink key={item.label} item={item} isActive={pathname === item.href} />
           ))}
         </div>
+
 
         <div>
           <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-2 px-3">
@@ -76,7 +80,7 @@ export const Sidebar: React.FC = () => {
           </p>
           <div className="space-y-1">
             {manageItems.map((item) => (
-              <NavLink key={item.label} item={item} />
+              <NavLink key={item.label} item={item} isActive={pathname === item.href} />
             ))}
           </div>
         </div>
@@ -97,19 +101,19 @@ export const Sidebar: React.FC = () => {
           </Button>
         </div>
       </div>
-    </aside>
+    </aside >
   );
 };
 
-const NavLink: React.FC<{ item: NavItem }> = ({ item }) => {
+const NavLink: React.FC<{ item: NavItem; isActive: boolean }> = ({ item, isActive }) => {
   const Icon = item.icon;
-  
+
   return (
-    <a
+    <Link
       href={item.href}
       className={cn(
         "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200",
-        item.isActive
+        isActive
           ? "bg-primary text-primary-foreground shadow-md"
           : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
       )}
@@ -121,8 +125,8 @@ const NavLink: React.FC<{ item: NavItem }> = ({ item }) => {
           {item.badge}
         </span>
       )}
-      {item.isActive && <ChevronRight className="w-4 h-4" />}
-    </a>
+      {isActive && <ChevronRight className="w-4 h-4" />}
+    </Link>
   );
 };
 

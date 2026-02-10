@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { 
-  JobPostFormData, 
-  DEPARTMENTS, 
-  EXPERIENCE_LEVELS, 
+
+import {
+  JobPostFormData,
+  DEPARTMENTS,
+  EXPERIENCE_LEVELS,
   LOCATION_TYPES,
-  CURRENCIES 
+  CURRENCIES
 } from '@/types/ats';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -55,25 +55,25 @@ export const JobPostForm: React.FC<JobPostFormProps> = ({
   const handleGenerateJD = async (type: string) => {
     setIsGeneratingJD(true);
     setGenerationType(type);
-    
+
     // Simulate AI generation
     await new Promise(resolve => setTimeout(resolve, 2000));
-    
+
     const generatedDescriptions: Record<string, string> = {
       standard: `About the Role\n\nWe are seeking a talented ${formData.title || 'professional'} to join our ${formData.department || 'team'}. This is an exciting opportunity to make a significant impact in a fast-paced environment.\n\nResponsibilities\n• Lead and execute key initiatives within your domain\n• Collaborate with cross-functional teams to deliver exceptional results\n• Drive innovation and continuous improvement\n• Mentor and guide team members\n\nRequirements\n• ${formData.experienceLevel === 'senior' ? '5+ years' : '2-4 years'} of relevant experience\n• Strong problem-solving and communication skills\n• Proven track record of delivering results\n• Self-motivated with excellent time management`,
-      
+
       outcome: `${formData.title || 'This Role'} - Impact-Driven\n\nWhat You'll Achieve in Year 1\n• First 30 days: Understand our systems, meet the team, complete onboarding\n• First 90 days: Own and deliver your first major project\n• First year: Drive measurable improvements in your area of ownership\n\nSuccess Metrics\n• Delivery velocity and quality\n• Team collaboration effectiveness\n• Innovation and process improvements\n• Stakeholder satisfaction scores\n\nWho You Are\nYou thrive on solving complex problems and measuring your impact. You're not just looking for a job—you want to build something meaningful.`,
-      
+
       founder: `Hey! We're looking for a ${formData.title || 'rockstar'} 🚀\n\nThe Real Deal\nWe're a growing team that moves fast and ships even faster. No bureaucracy, no endless meetings—just great people building great products.\n\nWhat You'll Actually Do\n• Ship features that real users love\n• Have a direct line to decision-making\n• Work with a small, talented team\n• See your impact within weeks, not years\n\nWhat We Need\n• Someone who gets stuff done\n• Clear communicator (async-first culture)\n• Comfortable with ambiguity\n• Passion for our mission`,
-      
+
       highSignal: `${formData.title || 'Role'} - For High Performers Only\n\n⚠️ This role is NOT for everyone.\n\nDo NOT apply if:\n• You need constant direction or hand-holding\n• You're uncomfortable with fast feedback cycles\n• You prefer process over outcomes\n• You're not ready to be held to high standards\n\nPerfect fit if:\n• You have a track record of exceptional delivery\n• You seek ownership and accountability\n• You thrive in high-performance environments\n• You want to work with the best\n\nExpectations\n• Immediate contribution expected within first month\n• Clear, measurable goals from day one\n• Regular performance conversations\n• High autonomy with high accountability`,
     };
-    
+
     setFormData(prev => ({
       ...prev,
       description: generatedDescriptions[type] || generatedDescriptions.standard,
     }));
-    
+
     setIsGeneratingJD(false);
     setGenerationType('');
   };
@@ -89,7 +89,7 @@ export const JobPostForm: React.FC<JobPostFormProps> = ({
       {/* Basic Info */}
       <div className="bg-card rounded-2xl p-6 shadow-card">
         <h3 className="text-lg font-semibold text-foreground mb-4">Job Details</h3>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-2">
             <Label htmlFor="title">Job Title *</Label>
@@ -100,7 +100,7 @@ export const JobPostForm: React.FC<JobPostFormProps> = ({
               onChange={(e) => updateField('title', e.target.value)}
             />
           </div>
-          
+
           <div className="space-y-2">
             <Label htmlFor="department">Department *</Label>
             <Select
@@ -119,7 +119,7 @@ export const JobPostForm: React.FC<JobPostFormProps> = ({
               </SelectContent>
             </Select>
           </div>
-          
+
           <div className="space-y-2">
             <Label htmlFor="experienceLevel">Experience Level</Label>
             <Select
@@ -138,7 +138,7 @@ export const JobPostForm: React.FC<JobPostFormProps> = ({
               </SelectContent>
             </Select>
           </div>
-          
+
           <div className="space-y-2">
             <Label htmlFor="locationType">Location Type</Label>
             <Select
@@ -157,7 +157,7 @@ export const JobPostForm: React.FC<JobPostFormProps> = ({
               </SelectContent>
             </Select>
           </div>
-          
+
           {formData.locationType !== 'remote' && (
             <div className="space-y-2 md:col-span-2">
               <Label htmlFor="location">Office Location</Label>
@@ -202,7 +202,7 @@ export const JobPostForm: React.FC<JobPostFormProps> = ({
             ))}
           </div>
         </div>
-        
+
         <Textarea
           placeholder="Describe the role, responsibilities, and requirements..."
           value={formData.description}
@@ -214,7 +214,7 @@ export const JobPostForm: React.FC<JobPostFormProps> = ({
       {/* Skills */}
       <div className="bg-card rounded-2xl p-6 shadow-card">
         <h3 className="text-lg font-semibold text-foreground mb-4">Skills & Requirements</h3>
-        
+
         <div className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="skills">Required Skills</Label>
@@ -232,7 +232,7 @@ export const JobPostForm: React.FC<JobPostFormProps> = ({
       {/* Compensation */}
       <div className="bg-card rounded-2xl p-6 shadow-card">
         <h3 className="text-lg font-semibold text-foreground mb-4">Compensation</h3>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <div className="space-y-2">
             <Label htmlFor="currency">Currency</Label>
@@ -252,7 +252,7 @@ export const JobPostForm: React.FC<JobPostFormProps> = ({
               </SelectContent>
             </Select>
           </div>
-          
+
           <div className="space-y-2">
             <Label htmlFor="salaryMin">Minimum Salary</Label>
             <Input
@@ -263,7 +263,7 @@ export const JobPostForm: React.FC<JobPostFormProps> = ({
               onChange={(e) => updateField('salaryMin', e.target.value)}
             />
           </div>
-          
+
           <div className="space-y-2">
             <Label htmlFor="salaryMax">Maximum Salary</Label>
             <Input
@@ -274,7 +274,7 @@ export const JobPostForm: React.FC<JobPostFormProps> = ({
               onChange={(e) => updateField('salaryMax', e.target.value)}
             />
           </div>
-          
+
           <div className="space-y-2">
             <Label htmlFor="deadline">Application Deadline</Label>
             <Input
